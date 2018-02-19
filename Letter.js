@@ -13,6 +13,7 @@ function Letter(char){
     this.guessChar = function(char){
         if(this.char === char){
             this.isGuessed = true;
+           
         }
     }
     

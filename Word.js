@@ -8,10 +8,9 @@ function Word(arr){
     }
    
     this.display = function(){
+        currWord = "";
         for(var c in letters){
             currWord += " " + letters[c].display();
-            
-
         }
         return currWord;
     }
@@ -20,7 +19,6 @@ function Word(arr){
         for(var c in letters){
             letters[c].guessChar(char);
         }
-        
     }
 }
 
