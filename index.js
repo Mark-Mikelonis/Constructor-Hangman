@@ -27,7 +27,7 @@ function Game(){
     askUser();
 } 
 
-Game();
+
 
 prompt.start();
 
@@ -35,9 +35,9 @@ function askUser(){
     prompt.get([
         {
             name:'guess',
-            message: "? Guess a letter"
+            message: "Guess a letter"
     
-        }], function (err, response){
+        }], function(err, response){
         if (err){
             throw err;
         } else {
@@ -66,8 +66,7 @@ function askUser(){
                     console.log("");
                     console.log("Out of guesses!");
                     console.log("");
-                    console.log("Play Again?");
-                    console.log("");
+                    
                 }
             }        
         }
