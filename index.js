@@ -6,30 +6,31 @@ var fs = require("fs");
 var guessesLeft = 10;
 var currentGuess = "";
 var wordArr = [];
-var words = fs.readFileSync("words.txt", "utf8", function(err, data){
+var currWord = "";
+
+
+var words = fs.readFileSync("words.txt", "utf8", function(err){
     if(err){
         console.log("error: " + err);
     }
     
 });
+
 wordsArr = words.split("\n");
-var random = Math.floor(Math.random()* (wordsArr.length -1));
-var str = wordsArr[random];
-console.log(chalk.blue(str));
-var charArray = str.split("");
-// var letters = [];
-var currWord = new Word(charArray);
 
-askUser();
+function Game(){
+    var random = Math.floor(Math.random()* (wordsArr.length -1));
+    var str = wordsArr[random];
+    var charArray = str.split("");
+    currWord = new Word(charArray);
+    console.log(chalk.blue(str));
+    askUser();
+} 
 
-
-// var showWord = currWord.display();
-
-
-// console.log(chalk.blue(showWord));
-
+Game();
 
 prompt.start();
+
 function askUser(){
     prompt.get([
         {
@@ -40,34 +41,44 @@ function askUser(){
         if (err){
             throw err;
         } else {
-            console.log(response.guess);
-            currWord.guessChar(response.guess);
-           
-            var showWord = currWord.display();
-            console.log("");
-            console.log(chalk.blue(showWord));
-            console.log("");
-            guessesLeft--;
-            if(guessesLeft > 0){
-                if(showWord.indexOf("_") === -1){
-                    console.log("You won!");
-                } else{
-                    console.log("");
-                    console.log(guessesLeft + " Guesses left");
-                    console.log("");
-                    askUser();
-                }
-                
+            if(!isAlphaChar(response.guess)){
+                console.log("Only Letters Allowed!\n Try Again.");
+                askUser();
             } else {
+                console.log(response.guess);
+                currWord.guessChar(response.guess);
+                var showWord = currWord.display();
                 console.log("");
-                console.log("Out of guesses!");
+                console.log(chalk.blue(showWord));
                 console.log("");
-                console.log("Play Again?");
-                console.log("");
-            }
+                guessesLeft--;
+                if(guessesLeft > 0){
+                    if(showWord.indexOf("_") === -1){
+                        console.log("You won!");
+                    } else {
+                        console.log("");
+                        console.log(guessesLeft + " Guesses left");
+                        console.log("");
+                        askUser();
+                    }
+                    
+                } else {
+                    console.log("");
+                    console.log("Out of guesses!");
+                    console.log("");
+                    console.log("Play Again?");
+                    console.log("");
+                }
+            }        
         }
     
     });
 }
     
 
+function isAlphaChar(char){
+    var regExp = /^[a-zA-Z]+$/;
+    return regExp.test(char);
+}
+
+module.exports = Game;
