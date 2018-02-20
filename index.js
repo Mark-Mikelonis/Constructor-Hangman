@@ -23,7 +23,7 @@ function Game(){
     var str = wordsArr[random];
     var charArray = str.split("");
     currWord = new Word(charArray);
-    console.log(chalk.blue(str));
+    // console.log(chalk.blue(str));
     askUser();
 } 
 
